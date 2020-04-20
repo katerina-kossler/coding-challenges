@@ -55,3 +55,33 @@ class MinStack:
     # obj.pop()
     # param_3 = obj.top()
     # param_4 = obj.getMin()
+ 
+ 
+#   
+# Given an array of integers, find if the array contains any duplicates.
+#
+# Your function should return true if any value appears at least twice
+#  in the array, and it should return false if every element is distinct.
+
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        # initialize an empty set
+        seen = set()
+        # loop through the list
+        for num in nums:
+            # for each item, check if in set
+                 # if in set, return true
+            if not num in seen:
+                seen.add(num)
+                # if not, add to set and continue
+            else:
+                return True
+        # if full list entered is traversed return false
+        return False
+    
+        # note: not just transforming list to set and comparing lengths
+        # to save time if a match is found early in the list and to min
+        # the required storage
+            # quick set solution:
+            # unique = set(nums)
+            # return len(unique) < len(nums)
