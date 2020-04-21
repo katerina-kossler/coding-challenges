@@ -85,3 +85,16 @@ class Solution:
             # quick set solution:
             # unique = set(nums)
             # return len(unique) < len(nums)
+            
+# Given a valid (IPv4) IP address, return a defanged version of that IP address.
+# A defanged IP address replaces every period "." with "[.]". 
+
+class Solution:
+  def defangIPaddr(self, address: str) -> str:
+      new_address = ''
+      for char in address:
+          if char == '.':
+              new_address += '[.]'
+          else:
+              new_address += char
+      return new_address
