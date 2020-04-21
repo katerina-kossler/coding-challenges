@@ -98,3 +98,8 @@ class Solution:
           else:
               new_address += char
       return new_address
+      
+class Solution: # same memory storage; faster; easier to understand
+    def defangIPaddr(self, address: str) -> str:
+        IP_parts = address.split('.')
+        return '[.]'.join(IP_parts)
