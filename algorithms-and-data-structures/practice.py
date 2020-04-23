@@ -181,3 +181,81 @@ def find_matching_num_subarrays(nums, k): # still working on
 
 print(find_matching_num_subarrays(
     [0,0,0,0,0,0,0,0,0,0],0)) 
+    
+# Given a binary tree, 
+# return the inorder traversal of its nodes' values.   
+#
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+# recursive
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        '''
+        inorder traversal == left,root,right
+        
+        
+        assume: 
+        - sorted BST
+        - unique values in the tree
+        '''
+        
+        # build up a list to represent a tree traversal
+        traversal = []
+        # examine (in order) the:
+        while root:
+            #1. left branch
+            if root.left:
+                traversal.extend(self.inorderTraversal(root.left))
+                
+            #2. root / current value
+            traversal.append(root.val)
+                
+            #3. right branch
+            if root.right:
+                traversal.extend(self.inorderTraversal(root.right))
+            
+            return traversal      
+            
+# iterative
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        '''
+        inorder traversal == left,root,right
+        
+        
+        assume: 
+        - sorted BST
+        - unique values in the tree
+        
+          1
+         2 3
+        4 5
+
+        >> [4, 2, 5, 1, 3]
+        
+            2
+          3  null
+         1 null
+        
+        '''
+        visited = []
+        # iterative
+        nodes_to_visit = [] # list as a stack (last in, first out)
+        # while going down, add to a stack
+        while root or nodes_to_visit:
+            while root:
+                # add root to the stack and try proceeding left
+                nodes_to_visit.append(root)
+                root = root.left
+            # when you can't go left, pop one off the stack, 
+            root = nodes_to_visit.pop(-1)
+            # add the value as visited 
+            visited.append(root.val)
+            # go right (and then try going left immediately after)
+            root = root.right
+        return visited
