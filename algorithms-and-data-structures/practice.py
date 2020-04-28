@@ -334,3 +334,23 @@ class Solution:
             column *= 26
             column += columns[char]
         return column
+        
+# Make a function that prints the prime numbers 1 - 100
+# Keep it simple 
+
+# expanded mine for 1 - n where n >= 2 and is an integer
+
+def print_prime(n):
+    '''Prints prime numbers from 1 to n including n'''
+    if is_integer(n) and n >= 2:
+        divisible_by = []
+        for number in range(2,n+1):
+            prime = True
+            for test in divisible_by:
+                if number % test == 0:
+                    prime = False
+            if prime:
+                print(number)
+            divisible_by.append(number)
+        
+print_prime(100)
