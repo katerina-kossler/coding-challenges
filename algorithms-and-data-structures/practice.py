@@ -354,3 +354,35 @@ def print_prime(n):
             divisible_by.append(number)
         
 print_prime(100)
+
+# pancake sort
+import math 
+
+def flip(arr,k):
+  '''takes in an array and reverses the order of the kth first elements'''
+  # determine if k is valid: 0 to len(arr) - 1 
+  if arr:
+    # loop through indicies from 0 to the middle of the kth times rounded down
+    halfway = int(math.floor((k+1)/2))
+    for idx in range(0,halfway):
+      # hold each item
+      hold = arr[idx]
+      # replace the item at the current position with it's opposite
+      arr[idx] = arr[k-idx]
+      # give the opposite position the value you held onto
+      arr[k-idx] = hold
+  
+def pancake_sort(arr):
+  '''Takes in an array and sorts using flip & returns the sorted array''' 
+  # loop through items in the array and sort throughout
+  if arr:
+     for idx in range(len(arr)-1,0,-1):
+        largest = 0
+        for current in range(0,idx+1):
+        # look for the largest value in each sized stack and flip there &
+        # to the full current size of stack
+          if arr[current] > arr[largest]:
+            largest = current
+        flip(arr,largest)
+        flip(arr,idx)
+  return arr
