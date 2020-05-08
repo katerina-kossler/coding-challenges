@@ -355,7 +355,8 @@ def print_prime(n):
         
 print_prime(100)
 
-# pancake sort
+# pancake sort - make a flip function to flip the first k items in an array
+# use flip to sort items in the array -- making a pancake sort
 import math 
 
 def flip(arr,k):
@@ -386,3 +387,34 @@ def pancake_sort(arr):
         flip(arr,largest)
         flip(arr,idx)
   return arr
+  
+  
+  
+  # Move zeros to the end of a fized list array
+  
+  def moveZerosToEnd(arr):
+	# brute force - likely higher complexity
+    # goal: O(n) time complexity, O(1) space complexity
+  
+  # edit the org arr in-place
+  
+  if arr:
+    # loop through array
+    idx = 0
+    zero_to_fill = 0
+    
+    while idx < len(arr)-1:
+
+      if arr[idx] != 0:
+        arr[zero_to_fill] = arr[idx]
+        zero_to_fill += 1 
+      idx += 1
+
+    while zero_to_fill < len(arr)-1:
+      arr[zero_to_fill] = 0
+      zero_to_fill += 1 
+      
+  return arr
+
+# arr = [1, 0, 0, 1, 0, 1]                
+# arr = [1, 10, 0, 2, 8, 3, 0, 0, 6, 4, 0, 5, 7, 0]
