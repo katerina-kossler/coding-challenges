@@ -418,3 +418,96 @@ def pancake_sort(arr):
 
 # arr = [1, 0, 0, 1, 0, 1]                
 # arr = [1, 10, 0, 2, 8, 3, 0, 0, 6, 4, 0, 5, 7, 0]
+
+# determine num filled orders
+def filledOrders(order, k):
+    '''
+    takes in:
+     1)an array of current orders (orders)
+     2)the number of widgets available 
+    -each element in the array denotes the number of widgets required
+     for the order
+    -assume priority is given to smaller orders as the goal is to 
+     satisfy the highest number of orders
+    '''
+    # hold a variable for the number of orders we can satisfy
+    num_filled = 0
+
+    # sort the orders by increasing widget requirement
+    order.sort() # O(nlogn)
+
+    # loop through the sorted orders to count how many orders can be fullfilled
+    for item in order: #O(n)
+        if k >= item:
+            num_filled += 1
+            k -= item
+        elif k < item:
+            break
+    return num_filled
+    
+    
+# The function is expected to return a STRING_ARRAY.
+# The function accepts following parameters:
+#  1. STRING s 
+#  2. STRING t
+# both are space delimited strings of words, t is a sub string of t
+# The function returns the words in string s that are not in t maintaining order
+
+def missingWords(s, t):
+    '''
+    this function takes in two strings 
+    with space delimited words and returns
+    words that are present in the first 
+    string (s) but are not present in the 
+    second string (t) in an array 
+    (maintaining the order they are in s)
+
+    assume:
+    - t is some ordered sub sequence of s
+    - words do not need to be unique 
+    (should not use python sets)
+    - words are case sensitive
+    - order matters ie: if first word is present in the second substring but out of order, the words do not match
+    
+    edge cases:
+    - s or t are empty > return empty array
+    
+    current solution:
+    s - s_words
+    t - t_words
+    m - non_match
+    time - O(s) ~ O(n) 
+    space - O(s + t + m) ~ O(s) ~ O(n)
+    
+    possible situations:
+    - t sub string in begining of s
+    - t sub string in middle of s
+    - t sub string at end of s
+    - t is empty ( assuming that's a valid substring )
+    '''
+    # hold an array for non-matching words
+    non_match = []
+    # break down strings into arrays using split
+    s_words = s.split(" ")
+    t_words = t.split(" ")
+
+    # account for the edge case in which s or t are empty strings
+    if s_words and t_words:
+        # make a pointer to go through t's words
+        t_idx = 0
+        # loop through indices of s_words
+        for s_idx in range(0,len(s_words)): # O(n) - n == length of s_words
+            # if the words at both index's are equal, move both pointers
+            if s_words[s_idx] == t_words[t_idx]:
+                t_idx += 1
+                # check if t_substring was done and add any remaining words in s_words
+                if t_idx == len(t_words):
+                    remaining_words = s_words[s_idx+1:]
+                    non_match.extend(remaining_words)
+                    # return the non_matching words
+                    return non_match
+            # if not, add the s word to non-match
+            else:
+                non_match.append(s_words[s_idx])
+    # return the non-matching words
+    return non_match
