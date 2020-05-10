@@ -603,3 +603,46 @@ def countingValleys(n, s):
             altitude += 1
     # return the number of valleys
     return valleys
+
+
+# Find minimum number of cloud jumps to win the game map (array)
+def jumpingOnClouds(c):
+    '''
+    Takes in an array of integers representing clouds with
+    0 for a safe cloud or 1 for a dangerous cloud
+
+    Returns the minimum number of jumps required to reach the last cloud
+
+    notes:
+    - user can jump to a safe cloud that is 1 or 2 locations away from the 
+    current position
+
+    asummptions:
+    - the first and last clouds are always safe to jump on
+    - the map is always solvable: there is a safe cloud 1 or 2 locations away
+
+    goal in solution:
+    - prioritize further jumps if possible
+
+    solution:
+    time: O(n) : length of c (always moving forward by 1 or 2 spaces for cycle of loop)
+    space: O(2) - O(2) : the jump counter and current cloud pointer 
+    '''
+
+    # record the number of jumps starting at 0
+    jumps = 0
+    # hold a pointer to the first position in the list of clouds
+    cloud = 0
+    # loop through until the end is reached (while)
+    while cloud < len(c)-1:
+        # check if you can jump two positions and if so, check if the cloud two away is safe
+        if cloud < len(c)-2 and c[cloud+2] == 0:
+            # if safe, move pointer up two
+            cloud += 2
+        # if either condition is not met, move to the next cloud
+        else:
+            cloud += 1
+        # increase num jumps regardless
+        jumps += 1
+    # once loops exits (end is reached), return th enumber of jumps required 
+    return jumps
