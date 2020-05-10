@@ -699,3 +699,54 @@ def repeatedString(s, n):
                 num_a+=1
     # print the number of 'a's in the nth first characters and return none
     return(num_a)
+    
+    # Complete the hourglassSum function below.
+def calculate_hourglass(arr, start_x, start_y):
+    '''
+    takes in a 2D array, an x and a y coordinate 
+    returns the hourglass sum that begins at this location
+    '''
+    return (arr[start_y][start_x] +
+            arr[start_y][start_x+1] +
+            arr[start_y][start_x+2] +
+            arr[start_y+1][start_x+1] +
+            arr[start_y+2][start_x] +
+            arr[start_y+2][start_x+1] +
+            arr[start_y+2][start_x+2])
+
+def hourglassSum(arr):
+    '''
+    Takes in a 2D array and returns the maximum
+    hour glass sum in the array
+
+    hour glass pattern:
+    a b c
+      d
+    e f g
+
+    assumptions:
+    - the input array is always 6 x 6 (square)
+    - the elements in the array are integers from -9 to +9
+
+    edgecase:
+    - all same value > return hourglass sum possible
+
+    approach:
+    - design algorithm to work with any square 2D array
+    - move through array to valid start indices in x and y coords
+    - calculate the hourclass sum and compare to current max
+    '''
+    # hold the maximum sum seen starting at neg inf
+    max_hrglass = float('-inf')
+    # determine the bounds for x and y indices based on array size [0 0 0 (0) 0 0]
+    max_idx = len(arr)-2
+    # walk through array by row
+    for y in range(0,max_idx):
+        # and column
+        for x in range(0,max_idx):
+            # at each valid index, calculate the sum
+            new_hrglass = calculate_hourglass(arr, y, x)
+            # compare to current max sum and keep the larger
+            max_hrglass = max(max_hrglass,new_hrglass)
+    # print the final largest sum
+    return max_hrglass
