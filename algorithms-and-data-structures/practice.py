@@ -511,3 +511,95 @@ def missingWords(s, t):
                 non_match.append(s_words[s_idx])
     # return the non-matching words
     return non_match
+    
+# find number of sock pairs
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the sockMerchant function below.
+def sockMerchant(n, ar):
+    '''
+    A function that takes in the total number of socks
+    and an array denoting the 'color' of each sock as an integer
+
+    the function returns how many pairs of sock there are
+
+    assume:
+    - valid inputs ie length of socks = len of color array
+    edge cases:
+    - 0-1 socks in the pile (0 pairs possible)
+    - the color colors are denoted by integers 1-100 (limited search space)
+    - maximum sock pile is 100 socks
+    '''
+    # form a variable to record how many pairs have been seen
+    pairs = 0
+
+    # check for edge case: 0-1 socks
+    if n < 2:
+        return pairs
+    
+        # form a dictionary for number of socks of each color
+    socks_by_color = {}
+
+    # loop through the array of socks
+    for sock in ar:
+        # check if the color has been seen and add one sock to the pair
+        socks_by_color[sock] = socks_by_color.get(sock, 0) + 1
+        # if the sock countfor this color is now even, inc the number of pairs
+        if socks_by_color[sock] % 2 == 0:
+            pairs += 1
+    # after checking the available socks return the number of sock pairs that can be sold
+    return pairs
+
+# Count valleys in a hike
+def countingValleys(n, s):
+    '''
+    A function that processes through a number of steps 
+    and a string of the step was uphill or downhill
+
+    Returns the number of valleys that were passed through
+    
+    def valley: 
+    - begin at sea level
+    - any number of steps below sea level
+    - end when sea level is reached again
+
+    assumptions:
+    - hiker always starts and ends at sea level
+    - at least two steps are taken per hike (at least 1 valley possible)
+    
+    edge case:
+    - one step down and one step up (1 valley)
+
+    focus for implementation:
+    - record any time a new valley is entered 
+
+    complexity:
+    time: O(n) - n = length of s
+    space: O(2) ~ O(1) = recording the valleys and altitude
+    '''
+    # make a counter for the number of valleys encountered
+    valleys = 0
+    # hold a variable to record the altitude relative to sea level
+    altitude = 0
+    # walk through steps:
+    for direction in s:
+        # if step is down
+        if direction == 'D':
+            # and the previous altitude was sealevel
+            if altitude == 0:
+            # increment the number of valleys
+                valleys += 1
+            # decrease the altitude
+            altitude -= 1
+        # if step if up
+        else: 
+            # increase the altitude
+            altitude += 1
+    # return the number of valleys
+    return valleys
