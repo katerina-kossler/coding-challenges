@@ -646,3 +646,56 @@ def jumpingOnClouds(c):
         jumps += 1
     # once loops exits (end is reached), return th enumber of jumps required 
     return jumps
+
+# print the number of 'a' characters in the first n characters of the infinitely-
+# repeating string s
+def repeatedString(s, n):
+    '''
+    A function that takes in an 'infinitely-repeating' string s
+    and the n number of characters to look through of s
+    for instances of the character 'a'
+    
+    returns nothing and prints the number of times 'a' occurs in the first
+    n characters
+
+    assumptions:
+    - n is 1 - 10^6
+    edge cases:
+    - no 'a's in the string > print 0
+    - the base sequence for s is some length 1 - 100
+
+    possible cases:
+    - n is less than or equal to the first occurance of s
+    - n is greater than the first sequence of s 
+
+    solution:
+    time: O(s+overflow) ~ O(n)
+    space: O(3) ~ O(1)
+    '''
+    # initialze the number of a's seen to 0
+    num_a = 0
+    # if n == 0, print num_a and return None
+    if n==0:
+        return(num_a)
+    # determine and hold the number of whole sequences of base s
+    # are required for the first n characters
+    whole_sequences = int(math.floor(n/len(s)))
+    # and any overflow sequences of s to reach n
+    overflow = int(math.floor(n % len(s)))
+    # loop through the base s to determine how many 'a's are present
+    for char in s:
+        if char=='a':
+            num_a+=1  
+    # if 0, print 0 and return none
+    if num_a==0:
+        return(num_a)
+    # multiple this number by the number of full loops of base s into
+    # the number of 'a's seen
+    num_a = num_a*whole_sequences
+    # loop through the overflow characters of s for how many 'a's occur
+    if overflow:
+        for char in s[:overflow]:
+            if char=='a':
+                num_a+=1
+    # print the number of 'a's in the nth first characters and return none
+    return(num_a)
