@@ -40,3 +40,20 @@
     C) Fruit from a basket, players from a class
   '''
 
+# range
+  '''
+  range(back,-1,-1) - move back to front
+  '''
+    
+# list comprehensions
+  '''
+  making a nested array:
+  [[0 for i in range(n)] for j in range(n)]
+  '''
+    
+# Fibonacci numbers and application to dynamic programming
+  '''
+  To find the nth fibonacci number, start with a base case (1, 2)
+  and build from there
+  F[n] = F[n-1] + F[n-2], F[0] = 1, F[1] = 2
+  '''

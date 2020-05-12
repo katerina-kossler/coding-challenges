@@ -700,7 +700,8 @@ def repeatedString(s, n):
     # print the number of 'a's in the nth first characters and return none
     return(num_a)
     
-    # Complete the hourglassSum function below.
+
+# Complete the hourglassSum function below.
 def calculate_hourglass(arr, start_x, start_y):
     '''
     takes in a 2D array, an x and a y coordinate 
@@ -736,6 +737,7 @@ def hourglassSum(arr):
     - move through array to valid start indices in x and y coords
     - calculate the hourclass sum and compare to current max
     '''
+    
     # hold the maximum sum seen starting at neg inf
     max_hrglass = float('-inf')
     # determine the bounds for x and y indices based on array size [0 0 0 (0) 0 0]
@@ -750,3 +752,83 @@ def hourglassSum(arr):
             max_hrglass = max(max_hrglass,new_hrglass)
     # print the final largest sum
     return max_hrglass
+    
+# Complete the rotLeft function below.
+# Rotate the array (a) by d places to the left
+def rotLeft(a, d):
+    '''
+    Given an array of integers (a) and 
+    a requested number of left rotations (d)
+
+    Return the input array shifted d times
+    
+    Assumptions:
+    - 1 < d <= len(a) at most the list will be fully rotated
+    - 1 < len(a) < 10^5 (wide search space for size of array)
+
+    Brute force solution: pop 1st item off the 
+    front of the array and then append to the end of the array 
+    (time: O(len(a)*d) ~ O(n^2))
+
+    notes on arrays:
+    - O(1): append / remove from end of the array
+
+    current approach:
+    - time: O(len(a)) ~ O(n) > going over every item in the array
+    - space: O(n) > form a new list of same length
+    '''
+
+    # start a new array
+    rotated = []
+    # starting at the nth object into the array
+    for ele in range(d,len(a)):
+        # append to a new array
+        rotated.append(a[ele]) 
+        # note - would be same time and space to use
+        # list.extend() on the same slice of the list
+        # I chose a loop and append for increased clarity
+    # starting from the beginning of the array
+    for ele in range(0,d):
+        # append all remaining objects to the array
+        rotated.append(a[ele])
+    return rotated
+    
+def num_of_paths_to_dest(n):
+  '''
+  Take in a size of grid (n)
+  and return the number of paths
+  
+  - move up (N) or (E) at any one time
+  - i >= j : (i,j)
+  - we always start at (0,0)
+  - we always end at (n-1,n-1)
+  
+  - equal up and east
+  - 1 ≤ n ≤ 100: assume at least one path
+  
+  '''
+  
+  paths_to_loc = [[0 for i in range(n)] for j in range(n)]
+  for y in range(n):
+    for x in range(n):
+      if x <= 1 and y == 0:
+        paths_to_loc[y][x] = 1  
+      elif x >= y:
+        if x == 0:
+          paths_to_loc[y][x] = paths_to_loc[y-1][x]
+        elif y == 0:
+          paths_to_loc[y][x] = paths_to_loc[y][x-1]
+        else:
+          paths_to_loc[y][x] = paths_to_loc[y-1][x] + paths_to_loc[y][x-1]
+   
+  return paths_to_loc[n-1][n-1]    
+
+  # dynamic - number of, considering previous solutions 
+        
+  #F[n] = F[n-1] + F[n-2], F[0] = 1, F[1] = 2
+  
+  #num[row][col] = num[n-1,n] + num[n,n-1] 
+
+  #num[1,1] = num[1,0] + num[0,1]
+  #num[1,0] = num[0,0] = 1
+  #num[0,0] = 1
