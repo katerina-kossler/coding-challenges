@@ -832,3 +832,105 @@ def num_of_paths_to_dest(n):
   #num[1,1] = num[1,0] + num[0,1]
   #num[1,0] = num[0,0] = 1
   #num[0,0] = 1
+  
+# find max area for an array of container heights
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        '''Given a list of heights, 
+            return the maximum area possible
+        
+        assumptions:
+            - each side is one unit away from the next
+            
+        '''
+        # initialize holding the current max area
+        max_area = 0
+        
+        # initialize a pointer to check through each location in the list
+        fwd = 0
+        # initialize a pointer to start at the end of the list 
+        back = len(height)-1
+        while fwd != back:
+            # for each iteration of the pointers,
+            # determine which pointer has a lower height
+            side_height = min(height[fwd],height[back]) 
+            # determine the distance between the pointers
+            distance = back - fwd
+            # area = lower height * distance btn
+            area = distance*side_height
+            # compare to current max 
+            max_area = max(max_area, area)
+            # (replace if larger)
+            
+            # compare the height's at each pointer, moving the lower height pointer, if they are the same move the forward moving pointer
+            if height[back] >= height[fwd]:
+                fwd += 1
+            else:
+                back -= 1 
+        # return max area
+        return max_area
+        
+# remove the nth node from the end of singly-linked list
+#
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        '''
+        Take in a linked list, and an integer with a valid nth node
+        
+        Removes the nth node, adn returns the head of the linked list
+        
+        edge case:
+        the nth node from the end is the head
+        '''
+         # two pass solution
+        
+        LList = head
+        # hold a counter for ther length of the LList
+        length = 0
+        
+        # walk through LList to determine length of LList
+        while LList:
+            length += 1
+            LList = LList.next
+
+        LList = head
+        # walk through LList and remove the (len(LList) - n + 1)th node
+        remove_at = length - n 
+        while LList:
+            if remove_at == 1:
+                node_to_remove = LList.next
+                LList.next = node_to_remove.next
+                return head
+            elif remove_at == 0: # edge case of removing the head
+                return LList.next
+            remove_at -= 1 
+            LList = LList.next
+
+        # One Pass solution
+        
+        # use a fast and delayed pointer
+        # start both at the head
+        fast_llist = head
+        delayed_llist = head
+        # use a counter to record where fast_llist is
+        distance = 0
+        # move through the LList with the fast pointer
+        while fast_llist.next:
+            fast_llist = fast_llist.next 
+            # only start moving the delayed pointer once fast pointer is n away
+            if distance >= n: 
+                delayed_llist = delayed_llist.next 
+            distance += 1 
+        # once fast pointer is None, remove the next node from the slow pointer
+        if distance >= n:
+            node_to_remove = delayed_llist.next 
+            delayed_llist.next = node_to_remove.next
+            return head
+        else: # edge case of removing the head
+            return head.next
