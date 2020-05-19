@@ -934,3 +934,76 @@ class Solution:
             return head
         else: # edge case of removing the head
             return head.next
+            
+# Number of unique paths to the end of a board 
+# (upon reflection this is similar to the paths to dest prob)
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        '''
+        take in coordinates of the final location (m,n)
+        return the number of unique paths from the 'start' (1,1)
+        
+        m - width
+        n - height
+        
+        assumptions:
+        - only positive movement
+        - right or down at any one time
+        
+        example:
+        m = 4
+        n = 3
+        
+        1. Right (2,1) > Right (3,1) > Right (4,1) > Down (4,2) > Down (4,3)
+        2. R (2,1) > R (3,1) > D (3,2) > R (4,2) > D (4,3)
+        3. R (2,1) > R (3,1) > D (3,2) > D (3,3) > D (4,3)
+        4. R (2,1) > D (2,2) > D (2,3) > R (3,3) > R (4,3)
+        5. R (2,1) > D (2,2) > R (3,2) > R (4,2) > D (4,3)
+        6. R (2,1) > D (2,2) > R (3,2) > D (4,2) > R (4,3)
+        
+        7. D (1,2) > D (1,3) > R (3x) > R > R
+        8. D (1,2) > R (2,3) > R (1x) > D (2x) > D
+        9. D (1,2) > R (2,3) > D (2x) > D > R (1x) 
+        10. D (1,2) > R (2,3) > D (1x) > R (1x) > D (1x)
+
+        (10 options)
+        
+        1 choice of two options
+        limited by dimension
+        
+        '''
+        # Recursive soln: 
+        # t = O(2^max(m,n)) 2 calls for all routes larger than m or n == 1
+        # space = O(max(m,n)) ~n return statements
+        # check if at the edge of the board (x = m or y = n)
+        # if at an edge only consider one way to move
+        if m == 1 or n == 1:
+            return 1
+        else:
+            return self.uniquePaths(m,n-1) + self.uniquePaths(m-1,n)
+        
+        # Iterative soln:
+        # t = O(m*n) + O(n) + O(m) + O(m*n) ~ O(m*n)
+        # space = O(m*n)
+        
+        # make a nested array of 0s on the board of m x n 
+        # O(n*m)
+        board = [[0 for m_idx in range(m)] for n_idx in range(n)]
+        
+        # Replace the edges of board with 1 (path from the edge to finish)
+        # O(n) + O(m)
+        for idx in range(m): # O(m)
+            board[n-1][idx] = 1
+        for idx in range(n): # O(n)
+            board[idx][m-1] = 1
+            
+        # move through the board and find the number of 
+        # paths to each location (from the edge)
+        for y in range(n-2,-1,-1): # O(n)
+            for x in range(m-2,-1,-1): # O(m)
+                board[y][x] = board[y+1][x] + board[y][x+1]
+                
+        # return the first location on the board 
+        # (max number of paths to the end)
+        return board[0][0]
+        
