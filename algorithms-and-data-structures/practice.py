@@ -1,3 +1,4 @@
+
 # 
 # Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
 
@@ -1006,4 +1007,32 @@ class Solution:
         # return the first location on the board 
         # (max number of paths to the end)
         return board[0][0]
-        
+
+# Review Hashmaps and Troubleshoot file readings
+# Given  names and phone numbers, assemble a phone book that maps friends
+#  names to their respective phone numbers. You will then be given an unknown 
+#  number of names to query your phone book for. For each  queried, print the 
+#  associated entry from your phone book on a new line in the form name=phoneNumber; 
+# if an entry for  is not found, print Not found instead.
+
+phone_book = {}
+
+def check_phone_book(query):
+    result = phone_book.get(query)
+    if result:
+        return query+'='+result
+    else:
+        return 'Not found'
+
+if __name__ == '__main__':
+    entries = int(input())
+    for entry in range(0,entries):
+        listing = str(input()).split(" ")
+        phone_book[listing[0]]=listing[1]
+    while True:
+        try:
+            check = str(input())
+            print(check_phone_book(check))
+        except EOFError:
+            break
+
