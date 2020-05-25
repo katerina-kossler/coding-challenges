@@ -1035,4 +1035,27 @@ if __name__ == '__main__':
             print(check_phone_book(check))
         except EOFError:
             break
+            
+            
+# Recursion (and factorials)
+# Recursive Solution: t=O(n) space=O(n)
+# makes n+1 calls for all n greater than 1
+# the nested calls take up n+1 space
+def factorial(n):
+    if n <= 1:
+        return 1
+    else:
+        return n*factorial(n-1)
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input())
+
+    result = factorial(n)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
+
 
