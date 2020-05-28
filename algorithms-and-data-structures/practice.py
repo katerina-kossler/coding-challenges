@@ -1202,7 +1202,7 @@ class Difference:
                 largest = self.__elements[idx]
             if self.__elements[idx] < smallest:
                 smallest = self.__elements[idx]
-        self.maximumDifference = largest - smallest
+        self.maximumDifference = abs(largest - smallest)
 
 
 #testing
