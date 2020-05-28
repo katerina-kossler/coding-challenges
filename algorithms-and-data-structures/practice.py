@@ -1058,4 +1058,52 @@ if __name__ == '__main__':
 
     fptr.close()
 
+# Find the number of consecutive ones from a number in binary (base two)
+# from  a posititive integer in base 10
+
+import math
+import os
+import random
+import re
+import sys
+
+def find_max_consecutive_ones_in_binary(n):
+    '''takes in a positive integer (n) and returns the
+        highest number of consecutive 1's in 
+        it's binary form
+        
+        solution - 
+        while loop requires t: O(log(n))
+        looping over the binary number is t: O(len(binary_rev))
+
+        but its likely O(log(n)) will be the greater of the two
+        time uses in this problem space
+        '''
+    binary_rev = []
+    #translate the number into binary
+        # (2^n * 0 or 1)+(2^(n-1) * 0 or 1)
+    while n >= 1:
+        # hold the remainder of dividing by 2 (0 or 1)
+        binary_rev.append(n % 2)
+        # loop by dividing n by 2 holding the floor of the result
+        n = math.floor(n / 2)    
+    # now have the reverse of n in binary
+    max_ones = 0
+    current_ones = 0
+    #loop over the reverse of the number in binary
+    for digit in binary_rev:
+        # count consectuative number of ones
+        if digit == 1:
+            current_ones += 1
+            # replace a max consecutive number when surpassed
+            if current_ones > max_ones:
+                max_ones = current_ones
+        # restart when a zero is encountered
+        else:
+            current_ones = 0
+    return max_ones    
+
+if __name__ == '__main__':
+    n = int(input())
+    print(find_max_consecutive_ones_in_binary(n))
 
