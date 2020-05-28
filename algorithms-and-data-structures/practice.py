@@ -1107,3 +1107,68 @@ if __name__ == '__main__':
     n = int(input())
     print(find_max_consecutive_ones_in_binary(n))
 
+# inheritance practice
+class Person:
+	def __init__(self, firstName, lastName, idNumber):
+		self.firstName = firstName
+		self.lastName = lastName
+		self.idNumber = idNumber
+	def printPerson(self):
+		print("Name:", self.lastName + ",", self.firstName)
+		print("ID:", self.idNumber)
+
+class Student(Person):
+    def __init__(self, firstName, lastName, idNumber, scores=[]):
+        Person.__init__(self, firstName, lastName, idNumber)
+        self.scores = scores
+    def calculate(self):
+        '''Assume at least one score is available'''
+        average = scores[0]
+        for idx in range(1,len(scores)):
+            average = (average + scores[idx])/2
+        if average >= 90:
+            return 'O'
+        elif average >= 80:
+            return 'E'
+        elif average >= 70:
+            return 'A'
+        elif average >= 55:
+            return 'P'
+        elif average >= 40:
+            return 'D'
+        else:
+            return 'T'
+
+line = input().split()
+firstName = line[0]
+lastName = line[1]
+idNum = line[2]
+numScores = int(input()) # not needed for Python
+scores = list( map(int, input().split()) )
+s = Student(firstName, lastName, idNum, scores)
+s.printPerson()
+print("Grade:", s.calculate())
+
+# Abstract class practice
+from abc import ABCMeta, abstractmethod
+class Book(object, metaclass=ABCMeta):
+    def __init__(self,title,author):
+        self.title=title
+        self.author=author   
+    @abstractmethod
+    def display(): pass
+
+class MyBook(Book):
+    def __init__(self, title, author, price):
+        Book.__init__(self,title,author)
+        self.price=price
+    def display(self):
+        print('Title: '+str(self.title))
+        print('Author: '+str(self.author))
+        print('Price: '+str(self.price))
+        
+title=input()
+author=input()
+price=int(input())
+new_novel=MyBook(title,author,price)
+new_novel.display()
