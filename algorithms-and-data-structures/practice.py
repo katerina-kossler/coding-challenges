@@ -1172,3 +1172,44 @@ author=input()
 price=int(input())
 new_novel=MyBook(title,author,price)
 new_novel.display()
+
+
+## Practice with scope and finding the largest difference in a list of numbers
+# O(n logn) solution
+class Difference:
+    def __init__(self, a):
+        self.__elements = a
+        self.maximumDifference = 0
+
+    def computeDifference(self):
+        # sort the elements O(nlogn)
+        sorted_elements = sorted(self.__elements)
+        largest = sorted_elements[-1]
+        smallest = sorted_elements[0]
+        self.maximumDifference = abs(largest-smallest)
+
+# O(n) solution
+class Difference:
+    def __init__(self, a):
+        self.__elements = a
+        self.maximumDifference = 0
+
+    def computeDifference(self):
+        smallest = self.__elements[0]
+        largest = self.__elements[0]
+        for idx in range(1,len(self.__elements)):
+            if self.__elements[idx] > largest:
+                largest = self.__elements[idx]
+            if self.__elements[idx] < smallest:
+                smallest = self.__elements[idx]
+        self.maximumDifference = largest - smallest
+
+
+#testing
+_ = input()
+a = [int(e) for e in input().split(' ')]
+
+d = Difference(a)
+d.computeDifference()
+
+print(d.maximumDifference)
