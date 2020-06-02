@@ -1314,3 +1314,22 @@ if isPalindrome:
 else:
     print("The word, "+s+", is not a palindrome.") 
     
+# Bubble Sort Implementation
+n = int(input().strip())
+a = list(map(int, input().strip().split(' ')))
+def bubbleSort(a):
+    num_swaps = 0
+    # ensures all elements get len(a) oppertunities to swap (if worst case list is reversed)
+    for idx in range(len(a)-1): 
+        # goes through each element and compares to following element
+        for idx in range(len(a)-1):
+            # swaps if next element is smaller 
+            if a[idx] > a[idx+1]:
+                a[idx], a[idx+1] = a[idx+1], a[idx]
+                num_swaps+=1    
+    return a, num_swaps
+
+sorted_a, swaps = bubbleSort(a)
+print('Array is sorted in {} swaps.'.format(swaps))
+print('First Element: {}'.format(sorted_a[0]))
+print('Last Element: {}'.format(sorted_a[-1]))
