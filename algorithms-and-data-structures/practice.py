@@ -1333,3 +1333,96 @@ sorted_a, swaps = bubbleSort(a)
 print('Array is sorted in {} swaps.'.format(swaps))
 print('First Element: {}'.format(sorted_a[0]))
 print('Last Element: {}'.format(sorted_a[-1]))
+
+# Naive get longest height of BST
+class Node:
+    def __init__(self,data):
+        self.right=self.left=None
+        self.data = data
+class Solution:
+    def insert(self,root,data):
+        if root==None:
+            return Node(data)
+        else:
+            if data<=root.data:
+                cur=self.insert(root.left,data)
+                root.left=cur
+            else:
+                cur=self.insert(root.right,data)
+                root.right=cur
+        return root
+
+    def getHeight(self,root):
+        # if both paths exist, return the max path length of the two
+        if root.left and root.right:
+            return max(self.getHeight(root.left),self.getHeight(root.right)) + 1 
+        # if only one path exists follow it down
+        elif root.left:
+            return self.getHeight(root.left) + 1
+        elif root.right:
+            return self.getHeight(root.right) + 1
+        # if they do not return zero as the height from both
+        else:
+            return 0
+
+T=int(input())
+myTree=Solution()
+root=None
+for i in range(T):
+    data=int(input())
+    root=myTree.insert(root,data)
+height=myTree.getHeight(root)
+print(height)   
+
+# Breadth First Search of a Binary Search Tree
+mport sys
+
+class Node:
+    def __init__(self,data):
+        self.right=self.left=None
+        self.data = data
+class Solution:
+    def insert(self,root,data):
+        if root==None:
+            return Node(data)
+        else:
+            if data<=root.data:
+                cur=self.insert(root.left,data)
+                root.left=cur
+            else:
+                cur=self.insert(root.right,data)
+                root.right=cur
+        return root
+
+    def levelOrder(self,root):
+        '''Traverses the BST using BFS
+            Will implement a queue using an array but collections.duque 
+            or queue.Queue would likely be better objects (constant time look up)
+            Assume no duplicate values exist in the tree
+        '''
+        # form an array to hold the order of the nodes visited
+        visited = []
+        # form a queue f nodes to look at (starting with the root)
+        queue = [root]
+        # while there is anything in the queue, loop through it
+        while queue:
+            # start by popping off the first item of the queue
+            current = queue.pop(0)
+            # add it's value to the visited array as a string
+            visited.append(str(current.data))
+            # check if it has anything in it's left or right nodes
+            # if anything in left, add it to the end of the queue
+            if current.left:
+                queue.append(current.left)
+            # if anything in right, add it to the end of the queue
+            if current.right:
+                queue.append(current.right)
+        # join the visited elements with spaces and return the string
+        print(' '.join(visited))
+T=int(input())
+myTree=Solution()
+root=None
+for i in range(T):
+    data=int(input())
+    root=myTree.insert(root,data)
+myTree.levelOrder(root)
