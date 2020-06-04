@@ -1426,3 +1426,98 @@ for i in range(T):
     data=int(input())
     root=myTree.insert(root,data)
 myTree.levelOrder(root)
+
+## 
+## Merge k sorted linked lists and 
+## return it as one sorted list. Analyze and describe its complexity.
+from collections import deque
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+        
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        '''
+        Merged a list of k llists into one sorted llist
+        
+        Assume:
+        - no duplicate values in any one llist
+        - assume no empty inputs
+        - all elements are integers
+        '''
+        
+        if len(lists) == 0:
+            return None
+        
+        ## ~ O(n^2)
+        # sorted_values = []
+        # # loop through each linked list
+        # for llist in lists: # n^2
+        #     while llist: 
+        #         sorted_values.append(llist.val)
+        #         llist = llist.next 
+        # # resort the elements in the array
+        # sorted_values.sort() # n logn
+        # # move items in the array to result in one sorted array
+        # first_item = sorted_values.pop(0)
+        # merged_llist = ListNode(first_item)
+        # print(merged_llist.val)
+        # head = merged_llist
+        # for ele in sorted_values: # n
+        #     merged_llist.next = ListNode(ele)
+        #     merged_llist = merged_llist.next
+        # return head
+        
+        # maybe better:
+        # start with an empty llist
+        head = None
+        
+        # loop through the arr of llist:
+        while lists:
+            # hold current items
+            new_elements = deque()
+            # at each node, take the current value of every llist
+            for idx in range(len(lists)): # O(n)
+                if lists[idx]:
+                    new_elements.append(lists[idx].val)
+                    lists[idx] = lists[idx].next
+                # else:
+                #     lists.pop(idx)
+            # if new_elements is empty, there are no nodes to add
+            if len(new_elements) == 0:
+                break
+            # add each item into a llist in correct spot
+            if not head:
+                head = ListNode(new_elements.popleft())
+            while new_elements: # O(k)
+                current = new_elements.popleft()
+                # traverse llist and compare each node's val
+                # to the current element
+                # if the the element is smaller than the head
+                if current <= head.val:
+                    hold = head.val
+                    head = ListNode(current, ListNode(hold, head.next))
+                # otherwise go through and compare the new ele
+                # to the next node
+                else:
+                    pointer = head
+                    while True:
+                        # if there is a value to compare to 
+                        if pointer.next:
+                        # move the next node down and insert the current value if smaller
+                            if current <= pointer.next.val:
+                                hold = pointer.next
+                                pointer.next = ListNode(current, hold)
+                                break
+                        # otherwise keep looking
+                            else:
+                                pointer = pointer.next
+                        # if there isn't a next, append to end of llist
+                        else:
+                            pointer.next = ListNode(current) 
+                            break
+        return head
+        
