@@ -1569,3 +1569,36 @@ for i in range(T):
     head=mylist.insert(head,data)    
 head=mylist.removeDuplicates(head)
 mylist.display(head); 
+
+# Check if Prime Optimal Solution
+import math
+
+def check_if_prime(n):
+    '''Determines if the input integer is prime
+    
+       A prime number is 
+       - a number greater than one
+       - that is only divisible by 1 and itself    
+    '''
+    # handle edge case of less than one
+    if n <= 1:
+        return 'Not prime'
+
+    # utilize square roots and primes
+    # sqrt(n)*sqrt(n)=n and to check if prime we are checking for 
+    # divisible factors such that
+    # n = a*b. as such a,b < n 
+    # with this we only need to check for
+    # divisible factors between 1 & sqrt(n) 
+
+    # this enables a O(sqrt(n)) solution
+    for num in range(2,math.floor(math.sqrt(n))+1):
+        if n % num == 0:
+            return 'Not prime'
+    return 'Prime'
+
+N=int(input())
+head=None
+for i in range(N):
+    n=int(input())
+    print(check_if_prime(n))
