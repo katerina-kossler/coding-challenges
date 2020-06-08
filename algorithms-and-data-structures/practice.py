@@ -1602,3 +1602,45 @@ head=None
 for i in range(N):
     n=int(input())
     print(check_if_prime(n))
+
+
+# Intro to RegEx
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+def check_if_gmail(email):
+    info = email.split('@')
+    if info[1] == 'gmail.com':
+        return True
+
+def add_name_from_gmail_in_alpha_order(names, first_name):
+    names[first_name] = names.get(first_name, 0) + 1
+    return names
+
+def print_names(names):
+    ordered_names = sorted(names.keys())
+    for name in ordered_names:
+        count = names[name]
+        for instance in range (0, count):
+            print(name)
+
+if __name__ == '__main__':
+    N = int(input())
+    gmail_names = {}
+    for N_itr in range(N):
+        firstNameEmailID = input().split()
+
+        firstName = firstNameEmailID[0]
+
+        emailID = firstNameEmailID[1]
+
+        if check_if_gmail(emailID):
+            add_name_from_gmail_in_alpha_order(gmail_names, firstName)
+    
+    print_names(gmail_names)
