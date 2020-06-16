@@ -1692,3 +1692,63 @@ class Solution:
     
         # N space and time complexity
         
+# Number of paths to go up n stairs
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        '''
+        Determine the disinct paths we can take to go up n stairs
+        
+        paths are made up of step intervals of:
+        1 step OR 2 steps at a time
+        
+        |_
+          |_
+          
+        base cases:
+        2 steps
+        1 step
+        0 steps
+          
+        '''
+        
+#         # option 1: recursively call the paths we could take 
+#         # n= 4
+#         # if there are two, one, or zero steps left
+#         if n == 2:
+#             return 2
+#         elif n == 1:
+#             return 1
+#         elif n == 0:
+#             return 0
+#         # otherwise recursively call taking either 1 or 2 steps
+#         else:
+#             return self.climbStairs(n-1) + self.climbStairs(n-2) # 2, 1, 2
+#         # recusively go through the two paths we can take
+        
+#         # n == 4
+#         # 1 + 1 + 1 + 1
+#         # 2 + 1 + 1
+#         # 1 + 2 + 1
+#         # 1 + 1 + 2
+#         # 2 + 2 
+        
+#         # time complexity : 2^n
+#         # space complexity: n
+        
+        # option 2: iterative approach, build up the number of steps for each path and have the sum of the num paths to the last two num of steps equal to the num paths to get up n stairs
+        
+        # edge cases of zero, one or two steps
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        elif n == 2:
+            return 2 
+        else:
+            paths_to_stairs = [1, 2]
+            for num in range(3,n+1):
+                new_paths = paths_to_stairs[-2] + paths_to_stairs[-1]
+                paths_to_stairs.append(new_paths)
+            return paths_to_stairs[-1]
+        # time complexity: n (loop through n-2 ~ n times to build the number of paths)
+        # space complexity: n (hold n number of paths to get to 1 to n steps)
