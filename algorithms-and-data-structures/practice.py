@@ -1644,3 +1644,51 @@ if __name__ == '__main__':
             add_name_from_gmail_in_alpha_order(gmail_names, firstName)
     
     print_names(gmail_names)
+ 
+# Return the Nth fibonacci Number   
+class Solution:
+    def fib(self, N: int) -> int:
+        '''
+        Calculate the nth fibonacci number
+        
+        Base Cases:
+        
+        fib(0) = 0
+        fib(1) = 1
+        fib(N) = fib(N-1) + fib(N-2)
+        
+        Assumptions:
+        0 <= N <= 30
+        
+        Edge cases:
+        N = 0, 1
+        
+        '''
+        
+        # option 1: recursive call stack 
+        # call fib(N) = fib(N-1) + fib(N-2) for every N
+        
+         # 2^N time completity = two cals for every N > 1
+         # N space complexity = need to hold 2N ~ N numbers on our call stack
+        
+        # option 2: iteratively make fib numbers
+        
+        # check for edge cases:
+        if N == 0:
+            return 0
+        elif N == 1:
+            return 1
+        
+        # start with the first two fibonacci numbers
+        fib_nums = [0, 1]
+        
+        # loop through and create more until n numbers are built
+        for num in range(2,N):
+            new_fib = fib_nums[-2] + fib_nums[-1]
+            fib_nums.append(new_fib)
+            
+        # return the nth fib number (from the sum of the last two)
+        return fib_nums[-2] + fib_nums[-1]
+    
+        # N space and time complexity
+        
