@@ -1752,3 +1752,80 @@ class Solution:
             return paths_to_stairs[-1]
         # time complexity: n (loop through n-2 ~ n times to build the number of paths)
         # space complexity: n (hold n number of paths to get to 1 to n steps)
+        
+# Search in a sorted array that is pivoted at an unknown point
+import math
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        '''
+        take in 
+        1) a sorted array of integers that is
+            pivoted at an unknown index
+        2) integer value you are looking for
+        
+        return 
+        the index at which the value is found
+        OR
+        -1 if the value is not found
+        
+        assumptions:
+        - no duplicates
+        - no empty arrays
+        
+        constraints:
+        - must be solved in O(log n) : halving the search 
+          space at every step
+        '''
+        # check if there are values in the array to check
+        if len(nums) == 0:
+            return -1
+        
+        # start with the first value in the array
+        current_index = 0
+        # almost a sorted array: binary search
+        while nums[0] != target:
+        # make a pivot at the midpoint
+            midpoint = int(math.floor(len(nums)/2))
+            # check the array can be split
+            if midpoint == 0:
+                return -1
+            # split the current array into two arrays
+            first_half = nums[:midpoint]
+            second_half = nums[midpoint:]
+            # compare the start and stop of each half to the target
+            # if any start or stop match the target 
+                # return the original index
+            if first_half[-1] == target:
+                return current_index + midpoint - 1
+            elif second_half[0] == target:
+                return current_index + midpoint
+            elif second_half[-1] == target:
+                return current_index + midpoint + len(second_half) - 1
+            # handle edge case of target is not present
+            elif len(first_half) == 1 or len(second_half) == 1:
+                return -1
+            else:
+            # persue the sorted sub-array (ie which half does not have the pivot)
+                if first_half[0] < first_half[-1]:
+                    if first_half[0] < target and first_half[-1] > target:
+                        nums = first_half
+                    else:
+                        nums = second_half
+                        current_index += midpoint
+                else:
+                    if second_half[0] < target and second_half[-1] > target:
+                        nums = second_half
+                        current_index += midpoint
+                    else:
+                        nums = first_half
+        # handle edge case of first value ever matching the target
+        return current_index
+    
+        # O(n)
+        # loop through the array : 
+            # keep track of the index and item 
+            # compare each value to the desired value
+            # if found,
+                # return the current index
+        # return -1 if not found
