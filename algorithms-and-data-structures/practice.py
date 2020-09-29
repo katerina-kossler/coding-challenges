@@ -1829,3 +1829,91 @@ class Solution:
             # if found,
                 # return the current index
         # return -1 if not found
+        
+        
+# find the number of anagram pairs in a given string
+import math
+import os
+import random
+import re
+import sys
+from collections import Counter
+
+class Solution:
+    def sherlockAndAnagrams(s):
+        """
+        sherlockAndAnagrams takes in a string and 
+        outputs the number of anagram pairs present for the string
+        assumptions:
+        - only lower case characters
+        example: cdcd
+            c
+            0 2
+            d
+            1 3
+            cd-cd
+            [0 1] [2 3]
+            cd / dc
+            [0 1] [1 2]
+            dc / cd
+            [1 2] [2 3]
+            pairs = 5
+        edge-cases:
+        string of length with n=0 or 1: 
+            pairs = 0
+            no pairs possible
+        string with all unique characters:
+            pairs = 0    
+        string with all the same letters (length n): 
+            kkkk
+            k
+            0,1 0,2 0,3
+            1,2 1,3 
+            2,3
+            kk
+            [0,1] [1,2]
+            [0,1] [2,3]
+            [1,2] [2,3]
+            kkk
+            [0,1,2] [1,2,3]
+            pairs = 10
+        """
+        # make an easy check if there are no pairs possible
+        char_counts = Counter(s)
+        highest_char_count = char_counts.most_common(1)[0][1]
+        if highest_char_count > 1:
+            # keep track of the number of pairs
+            pairs = 0
+            # create a set for unique sub strings
+            sub_strings = dict()
+            # make all possible substrings from a string
+            # substring: starting index
+            # O(n^2)
+            for start in range(len(s)):
+                for stop in range(start+1,len(s)+1):
+                    new_sub = s[start:stop]
+                    # sort the sub-string O(n log n)
+                    sorted_sub = "".join(sorted(new_sub))
+                    if sub_strings.get(sorted_sub, 0):
+                        # takes account of possible combinations between existing pairs
+                        pairs += sub_strings[sorted_sub]
+                        sub_strings[sorted_sub] += 1
+                    else:
+                        sub_strings[sorted_sub] = 1
+            return pairs
+        else: 
+            return 0
+
+    if __name__ == '__main__':
+        fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+        q = int(input())
+
+        for q_itr in range(q):
+            s = input()
+
+            result = sherlockAndAnagrams(s)
+
+            fptr.write(str(result) + '\n')
+
+        fptr.close()
