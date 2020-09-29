@@ -1917,3 +1917,45 @@ class Solution:
             fptr.write(str(result) + '\n')
 
         fptr.close()
+
+# check if strings have any common sub strings
+class Solution:
+    def twoStrings(s1, s2):
+    # brute force
+        # make sets of the unique substrings in each string O(n^2*m) for m longer length string
+        # form a intersection between the two sets if empty return NO, else YES
+    # better
+        # common substring just has to be one letter (anything larger will be captured in this)
+        # loop through a string and make a set of the characters
+        unique_char = set()
+        # O(n)
+        for c1 in s1:
+            # set is a hash tabls - O(1) avg lookup
+            if c1 not in unique_char:
+                unique_char.add(c1)
+        # loop through the other string and check if character is in the set
+        for c2 in s2:
+            if c2 in unique_char:
+                return "YES"
+        # if yes, return YES
+        # else cont
+        # if the string ends with no match,
+        # return NO
+        return "NO"
+    # O(n)
+
+    if __name__ == '__main__':
+        fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+        q = int(input())
+
+        for q_itr in range(q):
+            s1 = input()
+
+            s2 = input()
+
+            result = twoStrings(s1, s2)
+
+            fptr.write(result + '\n')
+
+        fptr.close()
