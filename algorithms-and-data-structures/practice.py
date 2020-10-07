@@ -1959,3 +1959,98 @@ class Solution:
             fptr.write(result + '\n')
 
         fptr.close()
+        
+# find the intersection of two rectangles that fall on a grid 
+def findIntersection(rect_1, rect_2):
+    """
+    each rect_n is defined as:
+      rect_1 = {
+          # Coordinates of bottom-left corner
+          'left_x'   : 1,
+          'bottom_y' : 1,
+          # Width and height
+          'width'    : 6,
+          'height'   : 3,
+      }
+      
+      rect_2 = {
+          'left_x'   : 5,
+          'bottom_y' : 2,
+          
+          'width'    : 3,
+          'height'   : 6,
+      }
+    
+    goal: 
+    - determine if there is an overlap
+    - determine the size of the overlap
+    - determine the coordinates of the overlap
+    
+    returns a new rectangle: rect_3 representing the
+    overlap of the two
+      rect_3 = {
+          'left_x'   : 5,
+          'bottom_y' : 2,
+          
+          'width'    : 2,
+          'height'   : 2,
+      }
+    
+    
+    assumptions:
+    - height and width are always positive (& zero)
+    
+    """
+    # assume there is an overlap
+    # determine if there is an overlap
+        
+        # width of overlap (rect_1 is left of or at same x-coord as rect_2) 
+        if (rect_1['left_x'] + rect_1['width'] <= rect_2['left_x']) or (rect_2['left_x'] + rect_2['width'] <= rect_2['left_x']):
+            return
+        else:
+            right_side = min(rect_1['left_x']+rect_1['width'],rect_2['left_x']+rect_2['width'])
+            left_side = max(rect_1['left_x'],rect_2['left_x'])
+            width = right_side - left_side
+            
+        
+        # height of overlap
+            if (rect_1['bottom_y'] + rect_1['height'] <= rect_2['bottom_y']) or (rect_2['bottom_y'] + rect_2['height'] <= rect_2['bottom_y']):
+                return
+            else:
+                top = min(rect_1['bottom_y']+rect_1['height'],rect_2['bottom_y']+rect_2['height'])
+                bottom = max(rect_1['bottom_y'], rect_2['botttom_y'])  
+                height = top - bottom
+               
+                if rect_1['width'] == width and rect_1['height'] == height:
+                    return rect_1
+                elif rect_2['width'] == width and rect_2['height'] == height:
+                    return rect_2
+                else:
+                    rect_3['width'] = width
+                    rect_3['height'] = height
+                    rect_3['left_x'] = left_side
+                    rect_3['bottom_y'] = bottom
+                    return rect_3
+                # find the starting coordinate   
+                     
+        
+      #   rect_1 = {
+      #     # Coordinates of bottom-left corner
+      #     'left_x'   : 1,
+      #     'bottom_y' : 1,
+      #     # Width and height
+      #     'width'    : 6,
+      #     'height'   : 3,
+      # }
+      
+      # rect_2 = {
+      #     'left_x'   : 5,
+      #     'bottom_y' : 2,
+          
+      #     'width'    : 3,
+      #     'height'   : 6,
+      # }
+    
+    # determine the size of the overlap
+    # determine the coordinates of the overlap
+    
